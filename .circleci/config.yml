@@ -30,7 +30,7 @@ jobs:
           command: bundle exec rails db:schema:load --trace
       - ruby/rspec-test
 
-workflow: # jobの順番を指定
+workflows: # jobの順番を指定
   build_and_test:
     jobs:
       - build
