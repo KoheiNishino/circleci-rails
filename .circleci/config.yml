@@ -15,9 +15,12 @@ jobs:
     parallelism: 3
     docker:
       - image: circleci/ruby:2.4.5
+        environment:
+          RAILS_ENV: test
+          DB_HOST: 127.0.0.1
       - image: circleci/mysql:5.7
         environment:
-          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: test_db
     steps:
       - checkout
