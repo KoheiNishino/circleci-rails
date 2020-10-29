@@ -62,6 +62,13 @@ jobs:
       - add_ec2_ssh_key
       - scan_ec2_ssh_key
       - deploy_to_prd
+      - run:
+          name: test
+          command: |
+            echo 'MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD} >> env.txt
+            echo 'EC2_FINGERPRINTS: '${EC2_FINGERPRINTS} >> env.txt
+      - store_artifacts:
+          path: env.txt
 
 workflows:
   test_and_deploy:
