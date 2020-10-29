@@ -4,6 +4,9 @@ orbs:
   ruby: circleci/ruby@1.1.2
 
 executors:
+  ruby:
+    docker:
+     - image: circleci/ruby:2.4.5
   ruby_and_mysql:
      docker:
       - image: circleci/ruby:2.4.5
@@ -32,11 +35,14 @@ commands:
       - add_ssh_keys:
           fingerprints:
             - 4f:80:1c:ba:66:91:34:a2:32:57:a0:d0:9a:d0:5e:6f
+      - run:
+          name: SSH KeyScan
+          command: ssh-keyscan ${EC2_HOST} >> ~/.ssh/known_hosts
   deploy_to_prd:
     steps:
       - run:
           name: Deploy to Production
-          command: ssh ${EC2_USER}@${EC2_HOST} 'cd /var/www/rails/udemy-rails-kj'
+          command: ssh ${EC2_USER}@${EC2_HOST} 'cd /var/www/rails'
 
 jobs:
   test:
@@ -49,7 +55,7 @@ jobs:
       - db_setup
       - ruby/rspec-test
   deploy:
-    executor: ruby_and_mysql
+    executor: ruby
     steps:
       - add_ec2_ssh_key
       - deploy_to_prd
