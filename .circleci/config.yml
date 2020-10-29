@@ -27,6 +27,11 @@ commands:
       - run:
           name: Database setup
           command: bundle exec rails db:schema:load --trace
+  add_ec2_ssh_key:
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - 4f:80:1c:ba:66:91:34:a2:32:57:a0:d0:9a:d0:5e:6f
 
 jobs:
   test:
@@ -38,8 +43,19 @@ jobs:
       - wait_for_db
       - db_setup
       - ruby/rspec-test
+  deploy:
+    executor: ruby_and_mysql
+    steps:
+      - checkout
+      - add_ec2_ssh_key
 
 workflows:
-  build_and_test:
+  test_and_deploy:
     jobs:
       - test
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only: main
