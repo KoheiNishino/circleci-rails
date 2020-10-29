@@ -32,6 +32,11 @@ commands:
       - add_ssh_keys:
           fingerprints:
             - 4f:80:1c:ba:66:91:34:a2:32:57:a0:d0:9a:d0:5e:6f
+  deploy_to_prd:
+    steps:
+      - run:
+          name: Deploy to Production
+          command: ssh ${EC2_USER}@${EC2_HOST} 'cd /var/www/rails/udemy-rails-kj'
 
 jobs:
   test:
@@ -46,8 +51,8 @@ jobs:
   deploy:
     executor: ruby_and_mysql
     steps:
-      - checkout
       - add_ec2_ssh_key
+      - deploy_to_prd
 
 workflows:
   test_and_deploy:
