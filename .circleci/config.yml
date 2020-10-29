@@ -34,7 +34,7 @@ commands:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - ${EC2_FINGERPRINTS}
+            - 4f:80:1c:ba:66:91:34:a2:32:57:a0:d0:9a:d0:5e:6f
   scan_ec2_ssh_key:
     steps:
       - run:
