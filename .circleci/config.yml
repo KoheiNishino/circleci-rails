@@ -17,7 +17,7 @@ executors:
         environment:
           MYSQL_DATABASE: app_test
           MYSQL_HOST: ${MYSQL_HOST}
-          MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+          MYSQL_ROOT_PASSWORD: password
 
 commands:
   wait_for_db:
