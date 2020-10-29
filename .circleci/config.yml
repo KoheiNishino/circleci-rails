@@ -23,13 +23,13 @@ commands:
   wait_for_db:
     steps:
       - run:
-        name: Wait for DB
-        command: dockerize -wait tcp://127.0.0.1:3306 -timeout 1m
+          name: Wait for DB
+          command: dockerize -wait tcp://127.0.0.1:3306 -timeout 1m
   db_setup:
     steps:
       - run:
-        name: Database setup
-        command: bundle exec rails db:schema:load --trace
+          name: Database setup
+          command: bundle exec rails db:schema:load --trace
 
 jobs:
   build:
