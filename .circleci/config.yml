@@ -34,7 +34,9 @@ commands:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - 4f:80:1c:ba:66:91:34:a2:32:57:a0:d0:9a:d0:5e:6f
+            - ${EC2_FINGERPRINTS}
+  scan_ec2_ssh_key:
+    steps:
       - run:
           name: SSH KeyScan
           command: ssh-keyscan ${EC2_HOST} >> ~/.ssh/known_hosts
@@ -42,7 +44,7 @@ commands:
     steps:
       - run:
           name: Deploy to Production
-          command: ssh ${EC2_USER}@${EC2_HOST} 'cd /var/www/rails'
+          command: ssh ${EC2_USER}@${EC2_HOST} 'cd /var/www/rails && ls -al'
 
 jobs:
   test:
@@ -58,6 +60,7 @@ jobs:
     executor: ruby
     steps:
       - add_ec2_ssh_key
+      - scan_ec2_ssh_key
       - deploy_to_prd
 
 workflows:
