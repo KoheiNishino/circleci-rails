@@ -12,19 +12,19 @@ executors:
       - image: circleci/ruby:2.4.5
         environment:
           RAILS_ENV: test
-          MYSQL_HOST: 127.0.0.1
+          MYSQL_HOST: ${MYSQL_HOST}
       - image: circleci/mysql:5.7
         environment:
           MYSQL_DATABASE: app_test
-          MYSQL_HOST: 127.0.0.1
-          MYSQL_ROOT_PASSWORD: password
+          MYSQL_HOST: ${MYSQL_HOST}
+          MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
 
 commands:
   wait_for_db:
     steps:
       - run:
           name: Wait for DB
-          command: dockerize -wait tcp://127.0.0.1:3306 -timeout 1m
+          command: dockerize -wait tcp://${MYSQL_HOST}:3306 -timeout 1m
   db_setup:
     steps:
       - run:
