@@ -14,7 +14,7 @@ default: &default # &でエイリアスを設定し、下記でブロックを�
   encoding: utf8 # 文字コード
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %> # コネクション数の上限
   username: <%= ENV.fetch("MYSQL_USERNAME", "root") %> # DBに接続するユーザー名
-  password: <%= ENV.fetch("MYSQL_PASSWORD", "password") %> # DBに接続するユーザーのPW(docker-compose.ymlのMYSQL_ROOT_PASSWORD)
+  password: <%= ENV.fetch("MYSQL_PASSWORD", "1234567") %> # DBに接続するユーザーのPW(docker-compose.ymlのMYSQL_ROOT_PASSWORD)
 
 development:
   <<: *default # defaultブロックの挿入(*は参照を意味する)
