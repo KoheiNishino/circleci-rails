@@ -4,9 +4,6 @@ orbs:
   ruby: circleci/ruby@1.1.2
 
 executors:
-  ruby:
-    docker:
-      - image: circleci/ruby:2.4.5
   ruby_and_mysql:
      docker:
       - image: circleci/ruby:2.4.5
@@ -17,7 +14,7 @@ executors:
         environment:
           MYSQL_DATABASE: app_test
           MYSQL_HOST: ${MYSQL_HOST}
-          MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+          MYSQL_ROOT_PASSWORD: password
 
 commands:
   wait_for_db:
@@ -32,11 +29,6 @@ commands:
           command: bundle exec rails db:schema:load --trace
 
 jobs:
-  build:
-    executor: ruby
-    steps:
-      - checkout
-      - ruby/install-deps
   test:
     parallelism: 3
     executor: ruby_and_mysql
@@ -50,7 +42,4 @@ jobs:
 workflows:
   build_and_test:
     jobs:
-      - build
-      - test:
-          requires:
-            - build
+      - test
